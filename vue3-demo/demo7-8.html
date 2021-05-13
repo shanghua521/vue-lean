@@ -1,0 +1,64 @@
+<!-- 在生命周期某一时刻自动执行 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo7-8</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'hello'
+            }
+        },
+        methods: {
+            handleItemClick() {
+                this.message = this.message === 'hello' ? 'hi' : 'hello'
+            }
+        },
+        beforeCreate() { // 在实例生成之前自动执行的函数
+            console.log("beforeCreate")
+        },
+        created() { // 在实例生成后执行的函数
+            console.log("created")
+        },
+        beforeMount() { // 当 data 中数据变化时
+            console.log("beforeMount")
+        },
+        mounted() {
+            // 渲染完成
+            console.log("mounted")
+        },
+        beforeUpdate() { // 当 data 中数据变化时，会立即自动执行的函数
+            console.log("beforeUpdate")
+            console.log(document.getElementById('app').innerHTML)
+        },
+        updated() {
+            console.log("updated") // 当 data 中数据变化时，页面重新渲染完成后，自动执行
+            console.log(document.getElementById('app').innerHTML)
+        },
+        beforeUnmount() { // 当 Vue 应用失效时，执行次函数
+            console.log("befaultUnmount")
+            console.log(document.getElementById('app').innerHTML)
+        },
+        unmounted() { // 当 Vue 应用失效时，且 DOM 完全销毁之后会自动执行的函数
+            console.log("unmounted")
+            console.log(document.getElementById('app').innerHTML)
+        },
+        template: "<h2 v-on:click='handleItemClick'>{{message}}</h2>"
+    })
+    const vm = app.mount("#app")
+    // app.unmount()
+    console.log(vm);
+</script>
+
+</html>

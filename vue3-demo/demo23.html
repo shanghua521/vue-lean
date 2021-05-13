@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo22</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      // 创建一个 VUE 的实例
+      data() {
+        return {
+          checkbox: true,
+          name: "未选中任何内容",
+          message: "hello world",
+        };
+      },
+      // v-model.lazy 鼠标失去焦点就会同步 data
+      // v-model.number 定义数据类型 自动转换数据类型
+      // v-model.trim 自动去除空格
+      template: `
+          <div>{{checkbox}}<input type="checkbox" v-model="checkbox"/></div>
+          <div>{{name}}
+            <input type="checkbox" v-model="name" true-value="hello world" false-value="hi world"/></div>
+            <div>
+              {{message}}
+                <input v-model.trim="message"/>
+              </div>
+      `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

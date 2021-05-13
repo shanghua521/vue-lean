@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo16</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </b ody>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          show: true,
+        };
+      },
+      // v-show 为 false 会使用 display: none 隐藏控件
+      // v-if 是直接删除不显示控件 v-if 还带有 v-else v-else-if 多种
+      template: `
+        <h2 v-show="show">hellwoworld</h2>
+        <h2 v-if="show">hellwoworld</h2>
+        `,
+    });
+    const vm = app.mount("#app"); 
+  </script>
+</html>

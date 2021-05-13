@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo13</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "bilibili",
+          prive: 10,
+          count: 2,
+          dateTime: "" + new Date(),
+        };
+      },
+      watch: {
+        // current 当前的值，现在的值
+        count(current, prew) {
+          console.log(current);
+          console.log("count changed");
+          console.log(prew);
+        },
+      },
+      computed: {
+        total() {
+          return this.prive * this.count;
+        },
+        date() {
+          return this.dateTime + "";
+        },
+      },
+      methods: {
+        handleItemClick() {
+          // this.prive += 1;
+          this.message =
+            this.message === "hello"
+              ? "hi"
+              : this.message === "bilibili"
+              ? "hello"
+              : "bilibili";
+        },
+        // 修改 data ，页面重新渲染，就会重新执行方法
+        totalMethod() {
+          return this.prive * this.count;
+        },
+        dateMethod() {
+          return this.dateTime + "";
+        },
+        addCount() {
+          this.count++;
+        },
+      },
+
+      template: `
+        <h2 @click="handleItemClick">{{message}}</h2>
+        <h2>总和：{{total}}</h2>
+        <button @click="addCount">再每一个</button>
+        `,
+    });
+    // 方法都能显示
+    const vm = app.mount("#app");
+  </script>
+  <style>
+    .one {
+      color: red;
+    }
+
+    .two {
+      color: green;
+    }
+
+    .three {
+      color: orange;
+    }
+  </style>
+</html>

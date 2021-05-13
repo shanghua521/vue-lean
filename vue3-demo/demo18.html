@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo18</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          listArray: ["谢大脚", "刘英", "晓红"],
+          listObject: {
+            GirlOne: "谢大脚",
+            GirlTwo: "刘英",
+            GirlThree: "晓红",
+          },
+        };
+      },
+      methods: {
+        handleChangeBtnClick() {
+          this.listArray.push("hello");
+        },
+      },
+      // v-for 的优先级高于 v-if 使用外层 div 的元素的情况，每个 li 外部都会多一个 div 最好使用 template 标签
+      template: `
+          <ul>
+            <template v-for="(item,index) in listArray" :key="index + item">
+              <li v-if="item != '谢大脚'">
+                {{index}}:{{item}}
+              </li>
+            </template>
+          </ul> 
+          <ul>
+              <li 
+                v-for="(value,key,index) in listObject"
+                :key="index+item"
+              >
+                [{{index}}]{{key}}:{{value}}
+              </li>
+          </ul>
+          <span v-for="count in 99">{{count}} </span>
+        `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

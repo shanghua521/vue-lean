@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo20</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    Vue.createApp({
+      // 创建一个 VUE 的实例
+      data() {
+        return {
+          count: 0,
+        };
+      },
+      methods: {
+        addCountClick() {
+          this.count++;
+        },
+        handBtnClick1() {
+          alert(1);
+        },
+      },
+      // 点击 button 会先调用 handBtnClick1 然后 addCountClick 默认情况
+      // self 只点击 div 本身才会调用，子元素则不会
+      // stop 阻止向上传播方法
+      // capture 捕获模式，点击 button 跟第一条注释相反
+      // once 方法只执行一次
+      // passive 对滚动优化
+      template: `
+        <div @click="handBtnClick1">
+          <div>目前已点佳丽数量{{count}}</div>
+          <button @click.once="addCountClick">增加一位佳丽</button>
+        </div>
+      `,
+    }).mount("#app");
+  </script>
+</html>

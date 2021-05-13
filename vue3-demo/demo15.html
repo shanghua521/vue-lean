@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo15</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          classString: "red",
+          classObject: {
+            red: true,
+            background: true,
+          },
+          classArray: ["green", "background", { red: true }],
+          styleString: "color:orange;",
+          styleObject: {
+            color: "red",
+            background: "yellow",
+          },
+        };
+      },
+      template: `
+        <h2 :style="styleObject">hellwoworld</h2>
+        <sonCom class="green"></sonCom>
+        `,
+    });
+
+    // !必须在外层写一个 div 包裹起来
+    app.component("sonCom", {
+      template: `
+      <div>
+      <div>sonCom</div>
+      <div>hello</div>
+      </div>
+      `,
+    });
+    // 方法都能显示
+    const vm = app.mount("#app");
+  </script>
+
+  <style>
+    .red {
+      color: red !important;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .background {
+      background-color: orange;
+    }
+  </style>
+</html>
