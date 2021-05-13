@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "123",
+          pay: () => {
+            alert("给你500元");
+          },
+        };
+      },
+      // 静态传值只能传字符串
+      // v-bind 可以传其他类型
+      template: `
+        <h2>hello world</h2>
+        <son :name="name"/>
+        <XiaoJieJie :pay="pay"/>
+        `,
+    });
+    // 接受 name="hello"
+    app.component("Son", {
+      props: ["name"],
+      template: `<div>{{name}}</div>`,
+    });
+
+    app.component("XiaoJieJie", {
+      props: ["pay"],
+      methods: {
+        handleClick() {
+          alert("请付钱...");
+          this.pay();
+        },
+      },
+      template: `
+        <div @click="this.handleClick">say hello to 小姐姐</div>
+      `,
+    });
+
+    const vm = app.mount("#app");
+  </script>
+</html>

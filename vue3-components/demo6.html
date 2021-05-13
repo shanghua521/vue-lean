@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          counter: 0,
+        };
+      },
+      template: `
+        <h2>hello world</h2>
+        <hello style="color:red;" msg="message"/>
+        `,
+    });
+
+    // 不使用 props: ["msg"] 接受 msg msg就会直接绑定到 h3 标签上
+    // 或者使用 inheritAttrs:false,
+    app.component("hello", {
+      mounted(){
+        console.log(this.$attrs.msg)
+      },
+      // props: ["msg"],
+      // inheritAttrs: false,
+      // 如果平级 没有父组件 也不会复制
+      // 可以使用 v-bind="$attrs" 获取 父组件的值
+      // 可以使用 $attrs.style 获取某一个值
+      template: `
+        <h3 v-bind:style="$attrs.style">Hello World</h3>
+        <h3 v-bind:msg="$attrs.msg">Hello World</h3>
+        <h3>Hello World</h3>
+      `,
+    });
+    const vm = app.mount("#app");
+
+    // Non-props
+  </script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const counter = {
+      data() {
+        return {
+          count: 0,
+        };
+      },
+      template: `
+          <div>
+            {{count}}
+            <button @click="count++">button</button>
+          </div>
+          `,
+    };
+    // js 默认不支持 xie-da-jiao 的命名方法
+    const xieDaJiao = {
+      template: `<h2>谢大脚</h2>`,
+    };
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          aaa: "aaa",
+        };
+      },
+      // 可以使用 k-v 写法，也可以直接写进去不使用 key
+      components: { count: counter, "xie-da-jiao": xieDaJiao },
+      template: `
+        <website/>
+        <describe/>
+        <count/>
+        <xie-da-jiao/>
+        `,
+    });
+    app.component("website", {
+      template: `<h2>hello world!</h2>`,
+    });
+
+    app.component("describe", {
+      template: `<h2>hi world!</h2>`,
+    });
+    // 只要定义，处处可以使用，性能不高，但是使用起来很方便
+    const vm = app.mount("#app");
+  </script>
+</html>

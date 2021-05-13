@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "123",
+        };
+      },
+      template: `
+        <h2>hello world</h2>
+        <son :name="name"/>
+        `,
+    });
+    // name:String 类型校验定义类型
+    // 支持 String Boolean Array Object Function Symbol
+    app.component("Son", {
+      props: {
+        // required:true 必填
+        // default: "Hello", 默认值
+        name: {
+          type: String,
+          // required:true,
+          // 验证必须含有 world
+          validators:function (value) {
+            // 可以加任何业务逻辑
+            return value.search("world") != -1;
+          },
+          default: "Hello",
+        },
+      },
+      template: `<div>{{name}} div</div>`,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          aaa: "aaa",
+        }
+      },
+      template: `
+        <website/>
+        <describe/>
+        <count/>
+        <count/>
+        <count/>
+        `,
+    });
+    app.component("website", {
+      template: `<h2>hello world!</h2>`,
+    });
+
+    app.component("describe", {
+      template: `<h2>hi world!</h2>`,
+    });
+
+    app.component("count", {
+      data() {
+        return {
+          count: 0,
+        }
+      },
+      template: `
+          <div>
+            {{count}}
+            <button @click="count++">button</button>
+          </div>`,
+    });
+
+    // 只要定义，处处可以使用，性能不高，但是使用起来很方便
+    const vm = app.mount("#app");
+  </script>
+</html>

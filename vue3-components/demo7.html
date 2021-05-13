@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          counter: 0,
+        };
+      },
+      methods: {
+        handleAddCounter(param) {
+          // this.counter += 1;
+          this.counter = param;
+        },
+      },
+      template: `
+        <h2>hello world</h2>
+        <counter :counter="counter" @add="handleAddCounter"/>
+        `,
+    });
+
+    app.component("Counter", {
+      props: ["counter"],
+      // emits: ["add"],
+      emits: {
+        add: (value) => {
+          return value < 20 ? true : false;
+        },
+      },
+      methods: {
+        handleClick() {
+          // this.$emit("add",2);
+          this.$emit("add", this.counter + 3);
+        },
+      },
+      data() {
+        return {
+          newCounter: this.counter,
+        };
+      },
+      template: `
+        {{counter}}<button @click="handleClick">增加数量</button>
+      `,
+    });
+    // 1.子组件调用父组件事件/方法的编写
+    // 2.子组件向父组件传递参数
+    // 3.传递参数时，如何进行校验
+    const vm = app.mount("#app");
+
+    // Non-props
+  </script>
+</html>

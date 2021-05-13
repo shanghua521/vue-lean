@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          counter: 0,
+        };
+      },
+      template: `
+        <h2>hello world</h2>
+        <counter :counter="counter "/>
+        `,
+    });
+
+    app.component("counter", {
+      props: ["counter"],
+      data(){
+        return {
+          newCounter:this.counter
+        }
+      },
+      // 在没有在 data() 中声明 newCounter 并使用才能用 
+      // 直接 counter+=1 不生效，原因，只读数据流
+      template: `{{newCounter}}<button @click="newCounter+=1">增加数量</button>`,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

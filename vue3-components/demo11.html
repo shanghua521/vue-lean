@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          showComponent: "dajiao",
+        };
+      },
+      methods: {
+        handleClick() {
+          this.showComponent =
+            this.showComponent == "dajiao" ? "liuying" : "dajiao";
+        },
+      },
+      template: `
+        <h2>欢迎光临红浪漫-请选择您的技师</h2>
+        <!-- <dajiao v-show="showComponent === 'dajiao'"/>
+        <liuying v-show="showComponent === 'liuying'"/> -->
+        <keep-alive>
+          <component :is="showComponent" />
+        </keep-alive>
+        <button @click="handleClick">切换技师</button>
+        `,
+    });
+    // 切换组件会让组件内 input 的内容消失，可以使用 keep-alive 保持
+    app.component("dajiao", {
+      template: `
+      <!-- <img src="https://newimg.jspang.com/xiedajiao01.jpg"/> -->
+      <input type="text"/>
+      `,
+    });
+    app.component("liuying", {
+      template: `
+          <img src="https://newimg.jspang.com/liuying01.jpg"/>
+      `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>
