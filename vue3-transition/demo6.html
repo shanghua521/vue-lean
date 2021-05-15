@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+      @keyframes comein {
+        0% {
+          transform: translateX(-100px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+      @keyframes comeout {
+        0% {
+          transform: translateX(0px);
+        }
+        100% {
+          transform: translateX(-100px);
+        }
+      }
+      .v-enter-from,
+      .v-leave-to {
+        opacity: 0;
+      }
+      .v-enter-to,
+      .v-leave-from {
+        opacity: 1;
+      }
+      .v-enter-active {
+        animation: comein 3s;
+        transition: opacity 7s ease-out; 
+      }
+      .v-leave-active {
+        animation: comeout 3s;
+        transition: opacity 7s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          isShow: false,
+        };
+      },
+      methods: {
+        handleClick() {
+          this.isShow = !this.isShow;
+        },
+      },
+      // type="animation" 代表以动画时间为准
+      // type="transition" 代表以过渡时间为准
+      // duration="1000" 以 duration 为准 1 秒钟结束
+      // duration="1000" enter:1000,leave:3000 分别设置进出时间 
+      template: `
+        <transition duration="{enter:1000,leave:3000}">
+          <div v-if="isShow">hello world</div>
+        </transition>
+        <button @click="handleClick">切换动画</button>
+      `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

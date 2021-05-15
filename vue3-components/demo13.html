@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          house: "北京别墅",
+        };
+      },
+      provide: {
+        newHouse: "北京200平方一套",
+      },
+      template: `
+        <h2>我有一套别墅，我传给我的儿子</h2>
+        <child :house="house" />
+        `,
+    });
+
+    app.component("child", {
+      props: ["house"],
+      template: `
+        <div>------------</div>
+        <div>我是子组件，我要把房子传给我的儿子</div>
+        <div>儿子接受{{house}}</div>
+        <child-child :house="house"/>
+        `,
+    });
+
+    app.component("child-child", {
+      props: ["house"],
+      inject:['newHouse'],
+      template: `
+      <div>------------</div>
+        <div>我是孙子组件，等待接收房子 </div>
+        <div>孙子接受{{house}},{{newHouse}}</div>
+      `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>

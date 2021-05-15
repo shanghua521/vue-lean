@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+      @keyframes comein {
+        0% {
+          transform: translateX(-100px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+      @keyframes comeout {
+        0% {
+          transform: translateX(0px);
+        }
+        100% {
+          transform: translateX(-100px);
+        }
+      }
+      .v-enter-active {
+        animation: comein 1s;
+      }
+      .v-leave-active {
+        animation: comeout 1s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          isShow: false,
+        };
+      },
+      methods: {
+        handleBeforeEnter(element) {
+          // 吃饭了
+          element.style.color = "red";
+        },
+        // done 用来通知 handleAfterEnter 执行
+        handleEnterActive(element, done) {
+          const animation = setInterval(() => {
+            const color = element.style.color;
+            if (color === "red") {
+              element.style.color = "green";
+            } else {
+              element.style.color = "red";
+            }
+          }, 500);
+          setTimeout(() => {
+            clearInterval(animation);
+            done();
+          }, 3000);
+        },
+        handleAfterEnter() {
+          alert("hello");
+        },
+        handleClick() {
+          this.isShow = !this.isShow;
+        },
+      },
+      // @before-enter="handleBeforeEnter"
+      // before-leave=""
+      // leave=""
+      // leave-after=""
+      template: `
+        <transition
+        @before-enter="handleBeforeEnter"
+        @enter="handleEnterActive"
+        @after-enter="handleAfterEnter"
+        
+        :css="false">
+          <div v-if="isShow">hello world</div>
+        </transition>
+        <button @click="handleClick">切换动画</button>
+      `,
+    });
+    const vm = app.mount("#app");
+  </script>
+</html>
