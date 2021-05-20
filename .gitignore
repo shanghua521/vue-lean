@@ -5,4 +5,4 @@ tstest/package.json
 tstest/tsconfig.json
 tstest/yarn.lock
 tstest/.parcel-cache
-tstest/dist
+dist
