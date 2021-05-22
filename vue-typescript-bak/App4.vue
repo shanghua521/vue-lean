@@ -2,7 +2,7 @@
   <div>
     <Suspense>
       <template #default>
-        <girl-show />
+        <async-show/>
       </template>
       <template #fallback>
         <h1>Loading...</h1>
@@ -11,20 +11,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onErrorCaptured } from "vue";
+import AsyncShow from "./components/AsyncShow.vue";
 import GirlShow from "./components/GirlShow.vue";
 
-export default defineComponent({
+export default {
   name: "App",
-  components: { GirlShow },
-  setup() {
-    onErrorCaptured((error) => {
-      console.error("error===>", error);
-      return true;
-    });
+  components: { AsyncShow },
+  setup(): unknown {
     return {};
   },
-});
+};
 </script>
 
 <style>

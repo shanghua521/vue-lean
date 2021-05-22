@@ -6,3 +6,4 @@ tstest/tsconfig.json
 tstest/yarn.lock
 tstest/.parcel-cache
 dist
+yarn.lock
