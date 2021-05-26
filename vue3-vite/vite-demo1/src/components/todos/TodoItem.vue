@@ -1,0 +1,94 @@
+<template>
+  <li :class="{ completed: todo.completed, editing: todo === editedTodo }">
+    <div class="view">
+      <!-- 绑定完成状态 -->
+      <input type="checkbox" v-model="todo.completed" />
+      <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+      <button @click="removeTodo(todo)">X</button>
+    </div>
+
+    <!-- 编辑待办 -->
+    <edit-todo
+      class="edit"
+      v-model:todo-title="todo.title"
+      v-todo-focus="todo === editedTodo"
+      v-model="todo.title"
+      @blur="doneEdit(todo)"
+      @keyup.enter="doneEdit()"
+      @keyup.escape="cancelTodo(todo)"
+    ></edit-todo>
+  </li>
+</template>
+
+<script>
+import { reactive, toRefs } from "vue";
+import EditTodo from "./EditTodo.vue";
+
+export default {
+  completed: {
+    EditTodo,
+  },
+  props: {
+    todo: {
+      type: Object,
+      required: true,
+    },
+    editedTodo: Object,
+  },
+  emits: ["remove-todo", "update:edited-todo"],
+  setup(props, { emit }) {
+    const state = reactive({
+      beforeEditCache: "", // 缓存前的 todo
+    });
+
+    function removeTodo(todo) {
+      emit("remove-todo", todo);
+    }
+
+    function editTodo(todo) {
+      state.beforeEditCache = todo.title;
+      emit("update:edited-todo", todo);
+    }
+
+    function cancelTodo(todo) {
+      todo.title = state.beforeEditCache;
+      emit("update:edited-todo", null);
+    }
+
+    function doneEdit(todo) {
+      emit("update:edited-todo", null);
+    }
+
+    return {
+      ...toRefs(state),
+      removeTodo,
+      editTodo,
+      cancelTodo,
+      doneEdit,
+    };
+  },
+  directives: {
+    "todo-focus": (el, binding) => {
+      if (binding.value) {
+        el.focus();
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.completed label {
+  text-decoration: line-through;
+}
+
+.edit,
+.editing .view {
+  display: none;
+}
+
+.view,
+.editing .edit {
+  display: block;
+}
+</style>

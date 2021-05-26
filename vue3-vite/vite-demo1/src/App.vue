@@ -1,14 +1,15 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <!-- <HelloWorld msg="Hello Vue 3.0 + Vite" /> -->
-  <todos></todos>
+  <!-- <todos></todos> -->
+  <route-view></route-view>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-import Todos from "./components/Todos.vue";
+import Todos from "./components/todos/Todos.vue";
 
-export default {
+export  default {
   name: "App",
   components: {
     HelloWorld,
