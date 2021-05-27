@@ -9,7 +9,6 @@
     ></edit-todo>
     <!-- 新增 -->
 
-    <!-- Todo 列表 -->
     <ul>
       <todo-item
           v-for="item in filterdTodos"

@@ -38,7 +38,7 @@ export default {
   emits: ["remove-todo", "update:edited-todo"],
   setup(props, { emit }) {
     const state = reactive({
-      beforeEditCache: "", // 缓存前的 todo
+      beforeEditCache: "", // 缓存前的
     });
 
     function removeTodo(todo) {
