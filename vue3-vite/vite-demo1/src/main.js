@@ -3,8 +3,35 @@ import App from "./App.vue";
 import "./index.css";
 import CanvasApp from "./CanvasApp.vue";
 import EditTodo from "./components/todos/EditTodo.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
+import Todos from "./components/todos/Todos.vue";
+import Dashboard from "./components/Dashboard.vue";
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    { path: "/", component: Dashboard },
+    { path: "/todos", component: Todos },
+  ],
+});
+
+router.addRoute({
+  path: "/about",
+  name: "about",
+  component: () => import("./components/About.vue"),
+});
+router.addRoute("about", {
+  path: "/about/info",
+  component: {
+    render() {
+      return h("div", "info path");
+    },
+  },
+});
+// 特性：动态路由
 
 const app = createApp(App)
+  .use(router)
   .component("comp", {
     render() {
       return h("div", "I am comp");
@@ -25,6 +52,8 @@ const app = createApp(App)
     },
   })
   .mount("#app");
+
+//app
 // 自定义渲染器
 const nodeOps = {
   createElement(tag, isSVG, is) {
