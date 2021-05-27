@@ -1,20 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <img height="200" alt="Vue logo" src="./assets/logo.png"/>
+  <!-- 传统写法 -->
+  <p @click="$store.commit('add')">{{ $store.state.count }}</p>
+  <!-- composition写法 -->
+  <p @click="add">{{ count }}</p>
   <!-- <HelloWorld msg="Hello Vue 3.0 + Vite" /> -->
   <!-- <todos></todos> -->
-  <router-view></router-view>
+  <router-view v-slot="{Component}">
+    <keep-alive>
+      <component :is="Component"/>
+    </keep-alive>
+  </router-view>
 
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
 import Todos from "./components/todos/Todos.vue";
+import {useStore} from "vuex";
+import {toRefs} from "vue";
 
-export  default {
+export default {
   name: "App",
   components: {
     HelloWorld,
     Todos,
   },
+  setup() {
+    const store = useStore();
+    console.log(store)
+    return {
+      ...toRefs(store.state),
+      add() {
+        store.commit('add')
+      }
+    }
+  }
 };
 </script>

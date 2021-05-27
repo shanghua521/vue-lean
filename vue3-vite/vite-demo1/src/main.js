@@ -1,19 +1,54 @@
-import { createApp, createRenderer, h } from "vue";
+import {createApp, createRenderer, h} from "vue";
 import App from "./App.vue";
 import "./index.css";
 import CanvasApp from "./CanvasApp.vue";
 import EditTodo from "./components/todos/EditTodo.vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import {createRouter, createWebHashHistory, createWebHistory} from "vue-router";
 import Todos from "./components/todos/Todos.vue";
 import Dashboard from "./components/Dashboard.vue";
+import NotFound from "./components/NotFound.vue";
+import {createStore} from "vuex";
 
+// 实例的创建方式
 const router = createRouter({
-  history: createWebHashHistory(),
+  // history: createWebHashHistory('bash-history'),
+  history: createWebHistory('bash-history'),
   routes: [
-    { path: "/", component: Dashboard },
-    { path: "/todos", component: Todos },
+    {path: "/", name: "dashboard", component: Dashboard},
+    {path: "/todos", name: "todos", component: Todos},
+    {path: "/:pathMatch(.*)*", name: "not-found", component: NotFound}
   ],
+  /*scrollBehavior(to, from, savedPosition) {
+      // {x:10 y:10}  {left:10 top:10}
+      if (savedPosition) {
+          console.log(savedPosition)
+          return savedPosition;
+      } else {
+          return {top: 0}
+      }
+  }*/
 });
+
+// 使用命名导航至 404
+/*router.resolve({
+    name: 'not-found',
+    params: {
+        pathMatch: []
+    }
+})*/
+
+const store = createStore({
+  state() {
+    return {
+      count: 1
+    }
+  },
+  mutations: {
+    add(state) {
+      state.count++;
+    }
+  }
+})
 
 router.addRoute({
   path: "/about",
@@ -22,6 +57,7 @@ router.addRoute({
 });
 router.addRoute("about", {
   path: "/about/info",
+  name: "info",
   component: {
     render() {
       return h("div", "info path");
@@ -32,6 +68,7 @@ router.addRoute("about", {
 
 const app = createApp(App)
   .use(router)
+  .use(store)
   .component("comp", {
     render() {
       return h("div", "I am comp");
@@ -40,7 +77,7 @@ const app = createApp(App)
   .component("comp2", {
     template: `
       <div @click="$emit('update:modelValue','new value')">
-        i am comp, {{modelValue}}
+      i am comp, {{ modelValue }}
       </div>
     `,
     props: ["modelValue"],
@@ -58,7 +95,7 @@ const app = createApp(App)
 const nodeOps = {
   createElement(tag, isSVG, is) {
     // 处理元素的创建逻辑
-    return { tag };
+    return {tag};
   },
   insert(child, parent, anchor) {
     // 处理元素的插入逻辑
@@ -87,17 +124,28 @@ const nodeOps = {
     // 属性更新
     el[key] = nextValue;
   },
-  remove: (child) => {},
-  createText: (text) => {},
-  createComment: (text) => {},
-  setText: (node, text) => {},
-  setElementText: (el, text) => {},
-  parentNode: (el) => {},
-  nextSibling: (node) => {},
-  querySelector: (selector) => {},
-  setScopeId: (el, id) => {},
-  cloneNode: (el) => {},
-  insertStaticContent: (content, parent, anchor, isSVG) => {},
+  remove: (child) => {
+  },
+  createText: (text) => {
+  },
+  createComment: (text) => {
+  },
+  setText: (node, text) => {
+  },
+  setElementText: (el, text) => {
+  },
+  parentNode: (el) => {
+  },
+  nextSibling: (node) => {
+  },
+  querySelector: (selector) => {
+  },
+  setScopeId: (el, id) => {
+  },
+  cloneNode: (el) => {
+  },
+  insertStaticContent: (content, parent, anchor, isSVG) => {
+  },
 };
 
 // 绘制方法:  el 就是子元素
@@ -106,7 +154,7 @@ const draw = function (el, noClear) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
   if (el.tag == "piechart") {
-    let { data, r, x, y } = el;
+    let {data, r, x, y} = el;
     let total = data.reduce((memo, current) => memo + current.count, 0);
     let start = 0,
       end = 0;
